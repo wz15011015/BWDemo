@@ -20,15 +20,15 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App needs to use your device&apos;s geographic location to determine the sunrise/sunset time while set the timer program.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App needs to use your device&apos;s geographic location to determine the sunrise/sunset time while set the timer program.</string>
+	<string>App needs to use your device's geographic location to determine the sunrise/sunset time while set the timer program.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>WantsToGetWiFiSSID</key>
-		<string>Your precise location will be used to get the current Wi-Fi SSID</string>
+		<string>Your precise location will be used to get the current Wi-Fi SSID.</string>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs to use your device's geographic location to determine the sunrise/sunset time while set the timer program.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

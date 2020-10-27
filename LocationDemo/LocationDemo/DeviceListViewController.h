@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DeviceListViewController : UIViewController
 
-@property (strong, nonatomic) CLLocationManager *locationManager; // 定位管理器
+@property (nonatomic, strong) CLLocationManager *locationManager; // 定位管理器
 
 @end
 

@@ -12,7 +12,7 @@
 
 @interface ViewController () <CLLocationManagerDelegate>
 
-@property (strong, nonatomic) CLLocationManager *locationManager; // 定位管理器
+@property (nonatomic, strong) CLLocationManager *locationManager; // 定位管理器
 
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 
@@ -44,7 +44,7 @@
     [self startAutoLocalizationWithAuthority:nil];
 }
 
-- (void)startAutoLocalizationWithAuthority:(void (^)(CLAuthorizationStatus status))authorizationStatus {
+- (void)startAutoLocalizationWithAuthority:(void(^)(CLAuthorizationStatus status))authorizationStatus {
     if (![CLLocationManager locationServicesEnabled]) {
         // 定位服务不可用
         if (authorizationStatus) {
@@ -149,9 +149,9 @@
 //        _locationManager.allowsBackgroundLocationUpdates = YES;
         
         // 是否在状态栏显示后台定位指示器
-        if (@available(iOS 11.0, *)) {
+//        if (@available(iOS 11.0, *)) {
 //            _locationManager.showsBackgroundLocationIndicator = YES;
-        }
+//        }
     }
     return _locationManager;
 }
