@@ -66,8 +66,8 @@
 ///
 - (void)autoRequestTemporaryFullAccuracyAuthorization {
     if (@available(iOS 14.0, *)) {
-        CLAccuracyAuthorization accuracyStatus = self.locationManager.accuracyAuthorization;
-        if (accuracyStatus == CLAccuracyAuthorizationFullAccuracy) {
+        BOOL isFullAccuracy = self.locationManager.accuracyAuthorization == CLAccuracyAuthorizationFullAccuracy;
+        if (isFullAccuracy) {
             NSLog(@"当前为精确定位状态,不需要申请临时开启一次精确位置权限.");
         } else {
             NSLog(@"当前为模糊定位状态,需要向用户申请临时开启一次精确位置权限.");
