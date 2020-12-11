@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddHandsetViewController">
+            <connections>
+                <outlet property="addButton" destination="kfI-6a-Vmg" id="uw5-l8-59X"/>
+                <outlet property="addButtonH" destination="qlx-oV-A1c" id="U4V-jJ-Hx4"/>
+                <outlet property="imeiTextField" destination="Tbf-U6-J7j" id="YVI-Ad-fwt"/>
+                <outlet property="imeiTextField2" destination="LFE-bE-6cd" id="edE-NY-c8M"/>
+                <outlet property="imeiTitleLabel" destination="H3j-mT-qE7" id="xVv-Oz-T1r"/>
+                <outlet property="imeiView" destination="EnZ-Kl-rEN" id="pg4-Be-nSN"/>
+                <outlet property="scanButton" destination="jDe-5Y-Apa" id="5Hj-rC-wrV"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vcL-ID-m7i">
+                    <rect key="frame" x="0.0" y="136" width="414" height="52"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMEI:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s4W-Ia-Geq">
+                            <rect key="frame" x="16" y="15.5" width="37" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please input IMEI (Impact Feedback)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LFE-bE-6cd">
+                            <rect key="frame" x="77" y="0.0" width="287" height="52"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="5nH-Ua-e5d"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CfP-cp-f9N">
+                            <rect key="frame" x="364" y="3" width="44" height="46"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="Tgp-1i-03B"/>
+                                <constraint firstAttribute="height" constant="46" id="sVd-IK-UgA"/>
+                            </constraints>
+                            <state key="normal" image="scan_icon"/>
+                            <connections>
+                                <action selector="scanEvent:" destination="-1" eventType="touchUpInside" id="Lw6-DK-cdE"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="CfP-cp-f9N" firstAttribute="centerY" secondItem="vcL-ID-m7i" secondAttribute="centerY" id="H6n-K1-Y7d"/>
+                        <constraint firstItem="s4W-Ia-Geq" firstAttribute="leading" secondItem="vcL-ID-m7i" secondAttribute="leading" constant="16" id="HYy-YH-8Ej"/>
+                        <constraint firstItem="s4W-Ia-Geq" firstAttribute="centerY" secondItem="vcL-ID-m7i" secondAttribute="centerY" id="IRP-Wf-ONO"/>
+                        <constraint firstItem="LFE-bE-6cd" firstAttribute="leading" secondItem="s4W-Ia-Geq" secondAttribute="trailing" constant="24" id="K21-17-2K3"/>
+                        <constraint firstItem="LFE-bE-6cd" firstAttribute="top" secondItem="vcL-ID-m7i" secondAttribute="top" id="TSW-3c-Iww"/>
+                        <constraint firstAttribute="trailing" secondItem="CfP-cp-f9N" secondAttribute="trailing" constant="6" id="X2C-xG-Zsw"/>
+                        <constraint firstItem="CfP-cp-f9N" firstAttribute="leading" secondItem="LFE-bE-6cd" secondAttribute="trailing" id="bh4-vC-wXI"/>
+                        <constraint firstAttribute="height" constant="52" id="dvY-2Z-ruV"/>
+                        <constraint firstAttribute="bottom" secondItem="LFE-bE-6cd" secondAttribute="bottom" id="fsc-uP-eow"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EnZ-Kl-rEN">
+                    <rect key="frame" x="0.0" y="56" width="414" height="52"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMEI:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3j-mT-qE7">
+                            <rect key="frame" x="16" y="15.5" width="37" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please input IMEI" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tbf-U6-J7j">
+                            <rect key="frame" x="77" y="0.0" width="287" height="52"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="vtW-Ht-Cpi"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDe-5Y-Apa">
+                            <rect key="frame" x="364" y="3" width="44" height="46"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="46" id="15r-3l-Da2"/>
+                                <constraint firstAttribute="width" constant="44" id="nez-jv-R5N"/>
+                            </constraints>
+                            <state key="normal" image="scan_icon"/>
+                            <connections>
+                                <action selector="scanEvent:" destination="-1" eventType="touchUpInside" id="1CS-sy-CfO"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="68s-Zj-yUd"/>
+                        <constraint firstItem="Tbf-U6-J7j" firstAttribute="leading" secondItem="H3j-mT-qE7" secondAttribute="trailing" constant="24" id="MCj-ym-0Wb"/>
+                        <constraint firstItem="Tbf-U6-J7j" firstAttribute="top" secondItem="EnZ-Kl-rEN" secondAttribute="top" id="MFR-Lt-nni"/>
+                        <constraint firstItem="H3j-mT-qE7" firstAttribute="leading" secondItem="EnZ-Kl-rEN" secondAttribute="leading" constant="16" id="O0V-8L-aS5"/>
+                        <constraint firstAttribute="trailing" secondItem="jDe-5Y-Apa" secondAttribute="trailing" constant="6" id="Qei-wL-Twe"/>
+                        <constraint firstItem="H3j-mT-qE7" firstAttribute="centerY" secondItem="EnZ-Kl-rEN" secondAttribute="centerY" id="Tas-IH-eze"/>
+                        <constraint firstAttribute="bottom" secondItem="Tbf-U6-J7j" secondAttribute="bottom" id="nQX-Y6-3cG"/>
+                        <constraint firstItem="jDe-5Y-Apa" firstAttribute="leading" secondItem="Tbf-U6-J7j" secondAttribute="trailing" id="t8W-oI-aRB"/>
+                        <constraint firstItem="jDe-5Y-Apa" firstAttribute="centerY" secondItem="EnZ-Kl-rEN" secondAttribute="centerY" id="wB1-Nj-F5S"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfI-6a-Vmg">
+                    <rect key="frame" x="32" y="216" width="350" height="44"/>
+                    <color key="backgroundColor" red="0.38431372549019605" green="0.81176470588235294" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="qlx-oV-A1c"/>
+                    </constraints>
+                    <state key="normal" title="Add handset">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vcL-ID-m7i" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="5vN-Lz-uYw"/>
+                <constraint firstItem="EnZ-Kl-rEN" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="12" id="6uT-GG-clO"/>
+                <constraint firstItem="kfI-6a-Vmg" firstAttribute="top" secondItem="vcL-ID-m7i" secondAttribute="bottom" constant="28" id="CIH-fM-EUV"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="kfI-6a-Vmg" secondAttribute="trailing" constant="32" id="Ckw-Bf-q0x"/>
+                <constraint firstItem="vcL-ID-m7i" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="KZ5-27-g8N"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="EnZ-Kl-rEN" secondAttribute="trailing" id="NXU-mT-E0p"/>
+                <constraint firstItem="kfI-6a-Vmg" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="32" id="WtT-Ng-i3L"/>
+                <constraint firstItem="EnZ-Kl-rEN" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="ghn-Hu-cvT"/>
+                <constraint firstItem="vcL-ID-m7i" firstAttribute="top" secondItem="EnZ-Kl-rEN" secondAttribute="bottom" constant="28" id="kka-7c-Bze"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="124.55357142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="scan_icon" width="24" height="24"/>
+    </resources>
+</document>
