@@ -9,6 +9,19 @@
 #import <UIKit/UIKit.h>
 #import <CoreHaptics/CoreHaptics.h>
 
+
+/// 使用触觉体验(CoreHaptics)的流程:
+///
+/// 1. 判断设备是否支持触觉引擎
+/// 2. 创建触觉引擎
+/// 3. 创建触觉事件模式
+/// 4. 创建模式播放器
+/// 5. 启动触觉引擎
+/// 6. 开启模式播放器,开始产生触觉体验
+/// 7. 停止触觉引擎
+///
+
+
 #define CoreHapticsUtilShared [CoreHapticsUtil shared]
 
 
