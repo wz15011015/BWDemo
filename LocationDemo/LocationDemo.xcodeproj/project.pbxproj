@@ -18,6 +18,7 @@
 		06021E33254408CB0059A980 /* WiFiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06021E31254408CB0059A980 /* WiFiViewController.xib */; };
 		065BE3C42544224C0052442C /* DeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065BE3C22544224C0052442C /* DeviceListViewController.m */; };
 		065BE3C52544224C0052442C /* DeviceListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 065BE3C32544224C0052442C /* DeviceListViewController.xib */; };
+		0661A1992608471900FD78B1 /* iOS14精确定位&模糊定位问题.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0661A1982608471900FD78B1 /* iOS14精确定位&模糊定位问题.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		065BE3C12544224C0052442C /* DeviceListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceListViewController.h; sourceTree = "<group>"; };
 		065BE3C22544224C0052442C /* DeviceListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceListViewController.m; sourceTree = "<group>"; };
 		065BE3C32544224C0052442C /* DeviceListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceListViewController.xib; sourceTree = "<group>"; };
+		0661A1982608471900FD78B1 /* iOS14精确定位&模糊定位问题.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "iOS14精确定位&模糊定位问题.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				065BE3C22544224C0052442C /* DeviceListViewController.m */,
 				065BE3C32544224C0052442C /* DeviceListViewController.xib */,
 				06021E1F254407130059A980 /* Assets.xcassets */,
+				0661A1982608471900FD78B1 /* iOS14精确定位&模糊定位问题.txt */,
 				06021E24254407140059A980 /* Info.plist */,
 				06021E25254407140059A980 /* main.m */,
 			);
@@ -155,6 +158,7 @@
 				06021E20254407130059A980 /* Assets.xcassets in Resources */,
 				065BE3C52544224C0052442C /* DeviceListViewController.xib in Resources */,
 				06021E1E254407110059A980 /* Main.storyboard in Resources */,
+				0661A1992608471900FD78B1 /* iOS14精确定位&模糊定位问题.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

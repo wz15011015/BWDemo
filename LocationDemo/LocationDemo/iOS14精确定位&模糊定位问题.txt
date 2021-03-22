@@ -1,0 +1,119 @@
+1. 不开启精确定位,获取不到WiFi名称。
+
+
+2. 在获取WiFi名称时,向用户申请临时开启一次精确位置权限,需调用:
+
+if (@available(iOS 14.0, *)) {
+    BOOL isFullAccuracy = self.locationManager.accuracyAuthorization == CLAccuracyAuthorizationFullAccuracy;
+    if (!isFullAccuracy) {
+        [self.locationManager requestTemporaryFullAccuracyAuthorizationWithPurposeKey:@"WantsToGetWiFiSSID"];
+    }
+}
+
+2.1 Info.plist中的配置:
+- 添加项目:  Privacy - Location Temporary Usage Description Dictionary
+- 在项目中添加键值对:  PurposeKey : 说明描述 , 针对不同的使用场景,可以添加多个键值对
+    例如:  WantsToGetWiFiSSID : Your precise location will be used to get the current Wi-Fi SSID.
+          WantsToNavigate    : Your precise location will be used to calculate a route and allow you to use turn-by-turn directions.
+
+2.2 说明描述的国际化
+- 需要在 InfoPlist.strings 中添加 PurposeKey 对应的国际化内容;
+  WantsToGetWiFiSSID = "Your precise location will be used to get the current Wi-Fi SSID";
+- 如果未提供国际化内容,则使用 Info.plist 中的说明描述;
+
+2.3 临时获取的精确位置权限说明:
+- 2.3.1 权限会自动过期,当用户在使用App中(如App在前台),不会过期;
+-- 测试: 前台 --> 后台 (大概10s内) --> 前台, 不会过期;
+-- 测试: 前台 --> 后台 (超过10s) --> 前台, 过期;
+
+- 2.3.2 App开启了持续的后台定位,不会过期;
+-- self.locationManager.allowsBackgroundLocationUpdates = YES;
+-- With UIBackgroundModes set to include "location" in Info.plist, you must also set this property to YES at runtime whenever calling -startUpdatingLocation with the intent to continue in the background.
+-- 提示: Setting this property to YES when UIBackgroundModes does not include "location" is a fatal error.
+        允许后台定位的前提是在 Capability 中配置了 Background Modes 的 Location updates，否则会产生致命错误。
+
+2.4 requestTemporaryFullAccuracyAuthorizationWithPurposeKey: 方法起作用的前提是用户授权了定位,
+即不是 kCLAuthorizationStatusNotDetermined / kCLAuthorizationStatusRestricted / kCLAuthorizationStatusDenied 状态.
+
+
+/*
+ *  requestTemporaryFullAccuracyAuthorizationWithPurposeKey:completion:
+ *
+ *  Discussion:
+ *      If your app doesn't have permission to access accurate location (see
+ *      -accuracyAuthorization), you can use this method to request temporary access
+ *      to accurate location.  This access will expire automatically, but it won't expire
+ *      while the user is still engaged with your app.  So, for example, while your app
+ *      is in the foreground your app will retain the temporary access it was granted.
+ *      Similarly, if your app starts a Continuous Background Location session with the
+ *      background location indicator enabled (see -showsBackgroundLocationIndicator),
+ *      your access to accurate location will remain as long as the background location
+ *      indicator remains enabled.  This allows your app to provide session-oriented
+ *      experiences which require accurate location (e.g. fitness or navigation), even if
+ *      the user has decided not to grant your app persistent access to accurate location.
+ *
+ *      When CoreLocation prepares the prompt for display, it will look at the
+ *      NSLocationTemporaryUsageDescriptionDictionary key in your Info.plist.  The value
+ *      should be a dictionary containing usage descriptions.  The purposeKey you provide
+ *      to this method must correspond to an entry in that dictionary.  To retrieve a
+ *      localized string, CoreLocation will load your InfoPlist.strings file and try to
+ *      look up a string using the purposeKey you provided.  If that fails, CoreLocation
+ *      will use the content provided in your Info.plist.  For example, suppose your
+ *      Info.plist contains the following.
+ *
+ *          <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+ *          <dict>
+ *            <key>ExampleUsageDescription</key>
+ *            <string>This app needs accurate location so it can verify that you're in a supported region.</string>
+ *            <key>AnotherUsageDescription</key>
+ *            <string>This app needs accurate location so it can show you relevant results.</string>
+ *          </dict>
+ *
+ *      In this case, you would be able to provide either "ExampleUsageDescription" or
+ *      "AnotherUsageDescription" for the purposeKey argument.  Passing any other string
+ *      would result in the prompt not being displayed.  To localize these usage
+ *      descriptions, you would add entries for "ExampleUsageDescription" and
+ *      "AnotherUsageDescription" to your InfoPlist.strings file.
+ *
+ *      CoreLocation may decide against showing the user a prompt.  For example, if your
+ *      app already has access to accurate location or it is currently in the background.
+ *      When that happens, your completion block will be called with an appropriate
+ *      NSError.  If the user responded to the prompt, your completion block will be
+ *      called with a nil error.  At that point, you may query the state of your
+ *      CLLocationManager to see if you have been granted accurate access.
+ *
+ *      The completion block will be called in the same threading context where delegate
+ *      callbacks occur.  That is, it will be called on the runloop where the
+ *      CLLocationManager was originally initialized.
+ */
+- (void)requestTemporaryFullAccuracyAuthorizationWithPurposeKey:(NSString *)purposeKey completion:(void(^ _Nullable)(NSError * _Nullable))completion API_AVAILABLE(ios(14.0), macos(11.0), watchos(7.0), tvos(14.0));
+
+
+3. iOS14中弃用方法
+3.1 类方法[CLLocationManager authorizationStatus]已弃用,需调用实例属性: self.locationManager.authorizationStatus
+
+3.2 授权状态代理方法 locationManager:didChangeAuthorizationStatus:  --> locationManagerDidChangeAuthorization:
+/*
+ *  locationManager:didChangeAuthorizationStatus:
+ *
+ *  Discussion:
+ *    Invoked when the authorization status changes for this application.
+ */
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status API_DEPRECATED_WITH_REPLACEMENT("-locationManagerDidChangeAuthorization:", ios(4.2, 14.0), macos(10.7, 11.0), watchos(1.0, 7.0), tvos(9.0, 14.0));
+
+/*
+ *  locationManagerDidChangeAuthorization:
+ *
+ *  Discussion:
+ *    Invoked when either the authorizationStatus or
+ *    accuracyAuthorization properties change
+ */
+- (void)locationManagerDidChangeAuthorization:(CLLocationManager *)manager API_AVAILABLE(ios(14.0), macos(11.0), watchos(7.0), tvos(14.0));
+
+
+4. 对于地理位置不敏感的App来说，iOS14也可以通过直接在Info.plist中添加 NSLocationDefaultAccuracyReduced 为true,默认请求模糊位置。
+这样设置之后，即使用户想要为该App开启精确定位权限，也无法开启。
+
+
+5. 高德开放平台文档 - 定位权限说明: 详细描述了 iOS 8.0 - iOS 14.0 前台定位与后台定位的配置
+https://lbs.amap.com/api/ios-navi-sdk/guide/create-project/location-positioning-statement
