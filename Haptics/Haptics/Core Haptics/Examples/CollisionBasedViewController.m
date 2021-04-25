@@ -9,6 +9,15 @@
 #import "CoreHapticsUtil.h"
 #import <CoreMotion/CoreMotion.h>
 
+#define IS_IPHONE_X_SERIES \
+({ \
+    BOOL iPhoneX = NO; \
+    if (@available(iOS 11.0, *)) { \
+        iPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0.0; \
+    } \
+    (iPhoneX); \
+}) \
+
 static const CGFloat kSphereRadius = 72;
 static const CGFloat kMaxVelocity = 500;
 
@@ -83,7 +92,7 @@ static const CGFloat kMaxVelocity = 500;
     
     if (@available(iOS 13.0, *)) {
         // 停止触觉引擎
-        [CoreHapticsUtilShared stopHapticEngine:self.engine completion:nil];
+        [CoreHapticsUtil stopHapticEngine:self.engine completion:nil];
     }
 }
 
@@ -100,7 +109,7 @@ static const CGFloat kMaxVelocity = 500;
         
         // 1. 创建触觉引擎
         __weak typeof(self) weakSelf = self;
-        self.engine = [CoreHapticsUtilShared createHapticEngineWithResetHandler:^{
+        self.engine = [CoreHapticsUtil createHapticEngineWithResetHandler:^{
             weakSelf.engineNeedStart = YES;
         } stoppedHandler:^(CHHapticEngineStoppedReason stoppedReason) {
             switch (stoppedReason) {
@@ -140,7 +149,7 @@ static const CGFloat kMaxVelocity = 500;
         }];
         
         // 2. 启动触觉引擎以准备使用
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             // engineNeedStart设置为NO,表示下次需要使用触觉引擎时,不用再去启动了
             self.engineNeedStart = NO;
         }];
@@ -181,7 +190,7 @@ static const CGFloat kMaxVelocity = 500;
     }
     
     // 2. 创建触觉模式播放器
-    id patternPlayer = [CoreHapticsUtilShared createPatternPlayerWithEngine:self.engine pattern:hapticPattern];
+    id patternPlayer = [CoreHapticsUtil createPatternPlayerWithEngine:self.engine pattern:hapticPattern];
     
     // 3. 返回触觉模式播放器
     return patternPlayer;
@@ -210,7 +219,10 @@ static const CGFloat kMaxVelocity = 500;
     self.wallCollisions = [[UICollisionBehavior alloc] initWithItems:@[self.sphereView]];
     self.wallCollisions.collisionDelegate = self;
     
-    CGFloat top = 24 + 64;
+    CGFloat top = 64;
+    if ([self iSiPhoneXSeries]) {
+        top += 24;
+    }
     // 设置边界
     CGPoint upperLeft = CGPointMake(-1, top);
     CGPoint upperRight = CGPointMake(self.windowWidth + 1, top);
@@ -280,7 +292,7 @@ static const CGFloat kMaxVelocity = 500;
         
         // 判断是否需要启动触觉引擎
         if (self.engineNeedStart) {
-            [CoreHapticsUtilShared startHapticEngine:self.engine completion:nil];
+            [CoreHapticsUtil startHapticEngine:self.engine completion:nil];
             self.engineNeedStart = NO;
         }
         
@@ -292,7 +304,7 @@ static const CGFloat kMaxVelocity = 500;
         CGFloat normalizedMagnitude = MIN(MAX(magnitude / kMaxVelocity, 0.0), 1.0);
         
         id patternPlayer = [self playerForMagnitude:normalizedMagnitude];
-        [CoreHapticsUtilShared startPatternPlayer:patternPlayer atTime:CHHapticTimeImmediate];
+        [CoreHapticsUtil startPatternPlayer:patternPlayer atTime:CHHapticTimeImmediate];
     }
 }
 
@@ -302,7 +314,7 @@ static const CGFloat kMaxVelocity = 500;
 - (void)appDidEnterBackgroundNotification {
     if (@available(iOS 13.0, *)) {
         // 进入后台后,停止触觉引擎
-        [CoreHapticsUtilShared stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = YES;
         }];
     }
@@ -311,7 +323,7 @@ static const CGFloat kMaxVelocity = 500;
 - (void)appWillEnterForegroundNotification {
     if (@available(iOS 13.0, *)) {
         // 进入前台后,启动触觉引擎
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = NO;
         }];
     }
@@ -322,6 +334,36 @@ static const CGFloat kMaxVelocity = 500;
 
 - (CGFloat)linearInterpolation:(CGFloat)alpha min:(CGFloat)min max:(CGFloat)max {
     return min + alpha * (max - min);
+}
+
+- (BOOL)iSiPhoneXSeries {
+    BOOL iPhoneX = NO;
+    
+    UIWindow *window = nil;
+    if (@available(iOS 13.0, *)) {
+        NSSet *scenes = UIApplication.sharedApplication.connectedScenes;
+        if (scenes.count) {
+            for (UIScene *scene in scenes) {
+                if (scene.activationState == UISceneActivationStateForegroundActive ||
+                    scene.activationState == UISceneActivationStateForegroundInactive) {
+                    UIWindowScene *windowScene = (UIWindowScene *)scene;
+                    window = windowScene.windows.firstObject;
+                    break;
+                }
+            }
+        } else {
+            window = [[UIApplication sharedApplication] delegate].window;
+        }
+    } else {
+        window = [[UIApplication sharedApplication] delegate].window;
+    }
+    
+    if (window) {
+        if (@available(iOS 11.0, *)) {
+            iPhoneX = window.safeAreaInsets.bottom > 0.0;
+        }
+    }
+    return iPhoneX;
 }
 
 /*

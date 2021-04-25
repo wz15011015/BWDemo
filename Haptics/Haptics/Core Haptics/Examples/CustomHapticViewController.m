@@ -120,7 +120,7 @@
         };
         
         // 3. 启动触觉引擎
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:nil];
+        [CoreHapticsUtil startHapticEngine:self.engine completion:nil];
     }
 }
 
@@ -217,14 +217,14 @@
 - (void)appDidEnterBackgroundNotification {
     if (@available(iOS 13.0, *)) {
         // 进入后台后,停止触觉引擎
-        [CoreHapticsUtilShared stopHapticEngine:self.engine completion:nil];
+        [CoreHapticsUtil stopHapticEngine:self.engine completion:nil];
     }
 }
 
 - (void)appWillEnterForegroundNotification {
     if (@available(iOS 13.0, *)) {
         // 进入前台后,启动触觉引擎
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:nil];
+        [CoreHapticsUtil startHapticEngine:self.engine completion:nil];
     }
 }
 

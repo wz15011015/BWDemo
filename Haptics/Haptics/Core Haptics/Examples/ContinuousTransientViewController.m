@@ -102,12 +102,12 @@ static const CGFloat InitialSharpness = 0.5;
         __weak typeof(self) weakSelf = self;
         
         // 创建触觉引擎
-        self.engine = [CoreHapticsUtilShared createHapticEngineWithResetHandler:^{
+        self.engine = [CoreHapticsUtil createHapticEngineWithResetHandler:^{
             weakSelf.engineNeedStart = YES;
         } stoppedHandler:nil];
         
         // 启动触觉引擎
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             // engineNeedStart设置为NO,表示下次需要使用触觉引擎时,不用再去启动了
             weakSelf.engineNeedStart = NO;
         }];
@@ -133,7 +133,7 @@ static const CGFloat InitialSharpness = 0.5;
         
         // 创建触觉模式播放器
         __weak typeof(self) weakSelf = self;
-        self.continuousPlayer = [CoreHapticsUtilShared createAdvancedPatternPlayerWithEngine:self.engine pattern:pattern];
+        self.continuousPlayer = [CoreHapticsUtil createAdvancedPatternPlayerWithEngine:self.engine pattern:pattern];
         // 播放完成的回调
         self.continuousPlayer.completionHandler = ^(NSError * _Nullable error) {
             // 重置面板颜色
@@ -166,9 +166,9 @@ static const CGFloat InitialSharpness = 0.5;
         }
         
         // 创建触觉模式播放器
-        id<CHHapticPatternPlayer> player = [CoreHapticsUtilShared createPatternPlayerWithEngine:self.engine pattern:pattern];
+        id<CHHapticPatternPlayer> player = [CoreHapticsUtil createPatternPlayerWithEngine:self.engine pattern:pattern];
         // 开始播放
-        [CoreHapticsUtilShared startPatternPlayer:player atTime:CHHapticTimeImmediate];
+        [CoreHapticsUtil startPatternPlayer:player atTime:CHHapticTimeImmediate];
     }
 }
 
@@ -413,7 +413,7 @@ static const CGFloat InitialSharpness = 0.5;
 - (void)appDidEnterBackgroundNotification {
     if (@available(iOS 13.0, *)) {
         // 进入后台后,停止触觉引擎
-        [CoreHapticsUtilShared stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = YES;
         }];
     }
@@ -422,7 +422,7 @@ static const CGFloat InitialSharpness = 0.5;
 - (void)appWillEnterForegroundNotification {
     if (@available(iOS 13.0, *)) {
         // 进入前台后,启动触觉引擎
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = NO;
         }];
     }

@@ -56,12 +56,12 @@
         
         // 创建触觉引擎
         __weak typeof(self) weakSelf = self;
-        self.engine = [CoreHapticsUtilShared createHapticEngineWithResetHandler:^{
+        self.engine = [CoreHapticsUtil createHapticEngineWithResetHandler:^{
             weakSelf.engineNeedStart = YES;
         } stoppedHandler:nil];
         
         // 启动触觉引擎
-//        [CoreHapticsUtilShared startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+//        [CoreHapticsUtil startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
 //            // engineNeedStart设置为NO,表示下次需要使用触觉引擎时,不用再去启动了
 //            weakSelf.engineNeedStart = NO;
 //        }];
@@ -161,7 +161,7 @@
         
         
         // 2. 创建触觉模式播放器
-        id<CHHapticPatternPlayer> patternPlayer = [CoreHapticsUtilShared createPatternPlayerWithEngine:self.engine pattern:hapticPattern];
+        id<CHHapticPatternPlayer> patternPlayer = [CoreHapticsUtil createPatternPlayerWithEngine:self.engine pattern:hapticPattern];
         
         // 3. 返回触觉模式播放器
         return patternPlayer;
@@ -177,16 +177,16 @@
     if (@available(iOS 13.0, *)) {
         // 判断是否需要启动触觉引擎
         if (self.engineNeedStart) {
-            [CoreHapticsUtilShared startHapticEngine:self.engine completion:nil];
+            [CoreHapticsUtil startHapticEngine:self.engine completion:nil];
             self.engineNeedStart = NO;
         }
         
         // 加载模式播放器并开启
         id<CHHapticPatternPlayer> patternPlayer = [self patternPlayerForSingleTap];
-        [CoreHapticsUtilShared startPatternPlayer:patternPlayer atTime:CHHapticTimeImmediate];
+        [CoreHapticsUtil startPatternPlayer:patternPlayer atTime:CHHapticTimeImmediate];
         
         // 停止触觉引擎
-        [CoreHapticsUtilShared stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = YES;
         }];
     }
@@ -198,7 +198,7 @@
 - (void)appDidEnterBackgroundNotification {
     // 进入后台后,停止触觉引擎
     if (@available(iOS 13.0, *)) {
-        [CoreHapticsUtilShared stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil stopHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = YES;
         }];
     }
@@ -207,7 +207,7 @@
 - (void)appWillEnterForegroundNotification {
     // 进入前台后,启动触觉引擎
     if (@available(iOS 13.0, *)) {
-        [CoreHapticsUtilShared startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
+        [CoreHapticsUtil startHapticEngine:self.engine completion:^(NSError * _Nullable error) {
             self.engineNeedStart = NO;
         }];
     }

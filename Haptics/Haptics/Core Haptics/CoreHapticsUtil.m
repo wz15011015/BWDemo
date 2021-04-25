@@ -9,14 +9,36 @@
 
 @implementation CoreHapticsUtil
 
-+ (instancetype)shared {
-    static CoreHapticsUtil *instance = nil;
+#pragma mark - Singleton
+
+static CoreHapticsUtil *_instance = nil;
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[self alloc] init];
+        _instance = [super allocWithZone:zone];
     });
-    return instance;
+    return _instance;
 }
+
++ (instancetype)sharedInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    return _instance;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return _instance;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return _instance;
+}
+
+
+#pragma mark - Init
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -35,8 +57,8 @@
 /// 创建触觉引擎
 /// @param resetHandler 触觉引擎重置的回调
 /// @param stoppedHandler 触觉引擎停止运行的回调
-- (CHHapticEngine *)createHapticEngineWithResetHandler:(CHHapticEngineResetHandler _Nullable)resetHandler stoppedHandler:(CHHapticEngineStoppedHandler _Nullable)stoppedHandler API_AVAILABLE(ios(13.0)) {
-    if (!self.supportsHaptics) {
++ (CHHapticEngine *)createHapticEngineWithResetHandler:(CHHapticEngineResetHandler _Nullable)resetHandler stoppedHandler:(CHHapticEngineStoppedHandler _Nullable)stoppedHandler API_AVAILABLE(ios(13.0)) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return nil;
     }
@@ -104,12 +126,12 @@
 /// 启动触觉引擎以准备使用
 /// @param engine 触觉引擎
 /// @param completion 完成回调
-- (void)startHapticEngine:(CHHapticEngine *)engine completion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0)) {
++ (void)startHapticEngine:(CHHapticEngine *)engine completion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0)) {
     if (!engine) {
         NSLog(@"触觉引擎_触觉引擎不存在!");
         return;
     }
-    if (!self.supportsHaptics) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return;
     }
@@ -130,12 +152,12 @@
 /// 停止触觉引擎
 /// @param engine 触觉引擎
 /// @param completion 完成回调
-- (void)stopHapticEngine:(CHHapticEngine *)engine completion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0)) {
++ (void)stopHapticEngine:(CHHapticEngine *)engine completion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0)) {
     if (!engine) {
         NSLog(@"触觉引擎_触觉引擎不存在!");
         return;
     }
-    if (!self.supportsHaptics) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return;
     }
@@ -161,8 +183,8 @@
 /// 创建触觉引擎模式播放器
 /// @param engine 触觉引擎
 /// @param pattern 模式
-- (id<CHHapticPatternPlayer>)createPatternPlayerWithEngine:(CHHapticEngine *)engine pattern:(CHHapticPattern *)pattern API_AVAILABLE(ios(13.0)) {
-    if (!self.supportsHaptics) {
++ (id<CHHapticPatternPlayer>)createPatternPlayerWithEngine:(CHHapticEngine *)engine pattern:(CHHapticPattern *)pattern API_AVAILABLE(ios(13.0)) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return nil;
     }
@@ -182,8 +204,8 @@
 /// 创建触觉引擎高级模式播放器
 /// @param engine 触觉引擎
 /// @param pattern 模式
-- (id<CHHapticAdvancedPatternPlayer>)createAdvancedPatternPlayerWithEngine:(CHHapticEngine *)engine pattern:(CHHapticPattern *)pattern API_AVAILABLE(ios(13.0)) {
-    if (!self.supportsHaptics) {
++ (id<CHHapticAdvancedPatternPlayer>)createAdvancedPatternPlayerWithEngine:(CHHapticEngine *)engine pattern:(CHHapticPattern *)pattern API_AVAILABLE(ios(13.0)) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return nil;
     }
@@ -201,8 +223,8 @@
 /// 开启模式播放器
 /// @param player 模式播放器
 /// @param time 开启时间 (传入 CHHapticTimeImmediate 或 0 表示立即开启)
-- (void)startPatternPlayer:(id<CHHapticPatternPlayer>)player atTime:(NSTimeInterval)time API_AVAILABLE(ios(13.0)) {
-    if (!self.supportsHaptics) {
++ (void)startPatternPlayer:(id<CHHapticPatternPlayer>)player atTime:(NSTimeInterval)time API_AVAILABLE(ios(13.0)) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return;
     }
@@ -217,8 +239,8 @@
 /// 停止模式播放器
 /// @param player 模式播放器
 /// @param time 停止时间 (传入 CHHapticTimeImmediate 或 0 表示立即停止)
-- (void)stopPatternPlayer:(id<CHHapticPatternPlayer>)player atTime:(NSTimeInterval)time API_AVAILABLE(ios(13.0)) {
-    if (!self.supportsHaptics) {
++ (void)stopPatternPlayer:(id<CHHapticPatternPlayer>)player atTime:(NSTimeInterval)time API_AVAILABLE(ios(13.0)) {
+    if (!CoreHapticsUtilShared.supportsHaptics) {
         NSLog(@"触觉引擎_设备不支持");
         return;
     }
