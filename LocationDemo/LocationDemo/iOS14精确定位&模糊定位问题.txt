@@ -116,4 +116,4 @@ if (@available(iOS 14.0, *)) {
 
 
 5. 高德开放平台文档 - 定位权限说明: 详细描述了 iOS 8.0 - iOS 14.0 前台定位与后台定位的配置
-https://lbs.amap.com/api/ios-navi-sdk/guide/create-project/location-positioning-statement
+https://lbs.amap.com/api/ios-location-sdk/guide/create-project/permission-description
