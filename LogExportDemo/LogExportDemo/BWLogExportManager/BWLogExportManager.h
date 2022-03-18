@@ -35,10 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 日志记录
 
 /// 开始日志记录
-/// @param xcodeEnable 连接Xcode进行调试时,是否记录日志
+/// @param xcodeEnable 连接Xcode运行时,是否记录日志
 - (void)startLogRecordWithXcodeEnable:(BOOL)xcodeEnable;
 
-/// 开始日志记录 (连接Xcode进行调试时,不记录日志)
+/// 开始日志记录 (连接Xcode运行时,不记录日志)
 - (void)startLogRecord;
 
 /// 停止日志记录
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param viewController 控制器
 - (void)addExportButtonInViewController:(UIViewController *)viewController;
 
-/// 移除添加日志导出按钮
+/// 移除日志导出按钮
 /// @param viewController 按钮所在控制器
 - (void)removeExportButtonInViewController:(UIViewController *)viewController;
 

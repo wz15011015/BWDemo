@@ -7,6 +7,7 @@
 //
 
 #import "BWLogExportManager.h"
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0
 #import "SceneDelegate.h"
 #else
@@ -99,7 +100,7 @@
 #pragma mark - Public
 
 /// 开始日志记录
-/// @param xcodeEnable 连接Xcode进行调试时,是否记录日志
+/// @param xcodeEnable 连接Xcode运行时,是否记录日志
 - (void)startLogRecordWithXcodeEnable:(BOOL)xcodeEnable {
     // 1. isatty(int) : 该函数主要功能是检查设备类型，判断文件描述符是否是为终端机。
     //
@@ -124,7 +125,7 @@
         freopen([_logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
         freopen([_logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
     } else {
-        if (isatty(STDOUT_FILENO)) { // 如果连接Xcode进行调试,则不输出到文件中
+        if (isatty(STDOUT_FILENO)) { // 如果连接Xcode运行,则不输出到文件中
             
         } else {
             // 记录原始的输出流并存储
@@ -137,7 +138,7 @@
     }
 }
 
-/// 开始日志记录 (连接Xcode进行调试时,不记录日志)
+/// 开始日志记录 (连接Xcode运行时,不记录日志)
 - (void)startLogRecord {
     [self startLogRecordWithXcodeEnable:NO];
 }
@@ -183,7 +184,7 @@
     });
 }
 
-/// 移除添加日志导出按钮
+/// 移除日志导出按钮
 /// @param viewController 按钮所在控制器
 - (void)removeExportButtonInViewController:(UIViewController *)viewController {
     if (!viewController) {
