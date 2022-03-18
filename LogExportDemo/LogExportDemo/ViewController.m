@@ -26,32 +26,15 @@ static NSString *URLString = @"https://www.jianshu.com/u/00084b53d83c";
     [super viewDidLoad];
     
     // 开始日志记录
-    // 提示: 需要在 开始日志记录 前设置文件名称,否则无效
-//    BWLogExportManagerShared.logFileName = @"Test.log";
-    [BWLogExportManagerShared startLogRecord];
+    [BWLogExportManagerShared addExportButtonInViewController:self];
+    [BWLogExportManagerShared startLogRecordWithXcodeEnable:YES];
     
     [self setupUI];
 }
 
 
-#pragma mark - Events
-
-/// 日志导出事件
-- (void)logExport {
-    // 指定弹出系统分享弹窗的控制器为当前控制器
-//    [BWLogExportManagerShared exportLogFileInViewController:self];
-    
-    // 如果使用该方法,则由当前应用程序主窗口的跟控制器弹出系统分享弹窗
-    [BWLogExportManagerShared exportLogFile];
-}
-
-
 - (void)setupUI {
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    // Log按钮
-    UIBarButtonItem *logButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log" style:UIBarButtonItemStylePlain target:self action:@selector(logExport)];
-    self.navigationItem.rightBarButtonItem = logButtonItem;
     
     // 添加控件
     // WKWebView

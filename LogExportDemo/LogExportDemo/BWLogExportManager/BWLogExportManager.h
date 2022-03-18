@@ -24,13 +24,43 @@ NS_ASSUME_NONNULL_BEGIN
 /// - 提示: 需要在 开始日志记录 前设置文件名称,否则无效
 @property (nonatomic, copy) NSString *logFileName;
 
+/// 日志导出按钮
+@property (nonatomic, strong) UIButton *logExportButton;
+
 
 /// 单例
 + (instancetype)shared;
 
 
+#pragma mark - 日志记录
+
 /// 开始日志记录
+/// @param xcodeEnable 连接Xcode进行调试时,是否记录日志
+- (void)startLogRecordWithXcodeEnable:(BOOL)xcodeEnable;
+
+/// 开始日志记录 (连接Xcode进行调试时,不记录日志)
 - (void)startLogRecord;
+
+/// 停止日志记录
+/// @param remove 是否移除日志导出按钮
+- (void)stopLogRecordWithExportButtonRemove:(BOOL)remove;
+
+/// 停止日志记录
+- (void)stopLogRecord;
+
+/// 清除日志缓存文件
+- (void)clearLogCaches;
+
+
+// MARK: UI
+
+/// 添加日志导出按钮到控制器右上角 (rightBarButtonItem)
+/// @param viewController 控制器
+- (void)addExportButtonInViewController:(UIViewController *)viewController;
+
+/// 移除添加日志导出按钮
+/// @param viewController 按钮所在控制器
+- (void)removeExportButtonInViewController:(UIViewController *)viewController;
 
 /// 通过系统的分享功能导出Log日志文件
 /// @param viewController  弹出系统分享弹窗的控制器
