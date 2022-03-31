@@ -7,7 +7,7 @@
 //
 
 #import "AddHandsetViewController.h"
-#import "FeedbackGeneatorUtil.h"
+#import "FeedbackGeneratorUtil.h"
 #import "SGQRCode.h"
 
 @interface AddHandsetViewController () <UITextFieldDelegate>
@@ -50,7 +50,7 @@
     [self.view endEditing:YES];
 
     // 在 SGQRCodeScanningVC.m 中的 - (void)captureOutput:didOutputMetadataObjects:fromConnection:
-    // 方法中调用了 [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleMedium];
+    // 方法中调用了 [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleMedium];
     
     SGQRCodeScanningVC *vc = [[SGQRCodeScanningVC alloc] init];
     if (sender.tag == 1) {

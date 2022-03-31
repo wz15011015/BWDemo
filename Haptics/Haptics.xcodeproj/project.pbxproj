@@ -15,7 +15,7 @@
 		0651D348256B6064000B110B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0651D346256B6064000B110B /* LaunchScreen.storyboard */; };
 		0651D34B256B6064000B110B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0651D34A256B6064000B110B /* main.m */; };
 		0651D360256B8B64000B110B /* UIFeedbackGeneatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0651D35E256B8B64000B110B /* UIFeedbackGeneatorViewController.m */; };
-		0651D366256B8F8C000B110B /* FeedbackGeneatorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0651D365256B8F8C000B110B /* FeedbackGeneatorUtil.m */; };
+		0651D366256B8F8C000B110B /* FeedbackGeneratorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0651D365256B8F8C000B110B /* FeedbackGeneratorUtil.m */; };
 		0651D38B256B9C9B000B110B /* UIAlertController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0651D38A256B9C9B000B110B /* UIAlertController+Extension.m */; };
 		0651D397256BA369000B110B /* EditDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0651D391256BA369000B110B /* EditDeviceViewController.m */; };
 		0651D398256BA369000B110B /* AddHandsetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0651D392256BA369000B110B /* AddHandsetViewController.xib */; };
@@ -64,8 +64,8 @@
 		0651D34A256B6064000B110B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0651D35D256B8B64000B110B /* UIFeedbackGeneatorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIFeedbackGeneatorViewController.h; sourceTree = "<group>"; };
 		0651D35E256B8B64000B110B /* UIFeedbackGeneatorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIFeedbackGeneatorViewController.m; sourceTree = "<group>"; };
-		0651D364256B8F8C000B110B /* FeedbackGeneatorUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackGeneatorUtil.h; sourceTree = "<group>"; };
-		0651D365256B8F8C000B110B /* FeedbackGeneatorUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackGeneatorUtil.m; sourceTree = "<group>"; };
+		0651D364256B8F8C000B110B /* FeedbackGeneratorUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackGeneratorUtil.h; sourceTree = "<group>"; };
+		0651D365256B8F8C000B110B /* FeedbackGeneratorUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackGeneratorUtil.m; sourceTree = "<group>"; };
 		0651D389256B9C9B000B110B /* UIAlertController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Extension.h"; sourceTree = "<group>"; };
 		0651D38A256B9C9B000B110B /* UIAlertController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Extension.m"; sourceTree = "<group>"; };
 		0651D391256BA369000B110B /* EditDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDeviceViewController.m; sourceTree = "<group>"; };
@@ -170,8 +170,8 @@
 			children = (
 				0651D35D256B8B64000B110B /* UIFeedbackGeneatorViewController.h */,
 				0651D35E256B8B64000B110B /* UIFeedbackGeneatorViewController.m */,
-				0651D364256B8F8C000B110B /* FeedbackGeneatorUtil.h */,
-				0651D365256B8F8C000B110B /* FeedbackGeneatorUtil.m */,
+				0651D364256B8F8C000B110B /* FeedbackGeneratorUtil.h */,
+				0651D365256B8F8C000B110B /* FeedbackGeneratorUtil.m */,
 				0651D390256BA369000B110B /* Examples */,
 			);
 			path = UIFeedbackGeneator;
@@ -417,7 +417,7 @@
 				0651D33D256B6061000B110B /* SceneDelegate.m in Sources */,
 				0651D360256B8B64000B110B /* UIFeedbackGeneatorViewController.m in Sources */,
 				06DF15D5258203990063DFE1 /* CustomHapticViewController.m in Sources */,
-				0651D366256B8F8C000B110B /* FeedbackGeneatorUtil.m in Sources */,
+				0651D366256B8F8C000B110B /* FeedbackGeneratorUtil.m in Sources */,
 				0651D3C7256BB413000B110B /* LanguageCell.m in Sources */,
 				06B53D9D2580A80A00646F8F /* ContinuousTransientViewController.m in Sources */,
 				0663B178256CA0890018D5FA /* CoreHapticsUtil.m in Sources */,

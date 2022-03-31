@@ -1,5 +1,5 @@
 //
-//  FeedbackGeneatorUtil.h
+//  FeedbackGeneratorUtil.h
 //  Haptics
 //
 //  Created by hadlinks on 2020/11/23.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FeedbackGeneatorUtil : NSObject
+@interface FeedbackGeneratorUtil : NSObject
 
 // MARK: 添加触感反馈
 

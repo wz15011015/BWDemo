@@ -6,7 +6,7 @@
 //
 
 #import "EditDeviceViewController.h"
-#import "FeedbackGeneatorUtil.h"
+#import "FeedbackGeneratorUtil.h"
 #import "UIAlertController+Extension.h"
 
 @interface EditDeviceViewController ()
@@ -38,7 +38,7 @@
         
     } else {
         // MARK: -------- UIImpactFeedbackGenerator 的使用 --------
-        [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleHeavy];
+        [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleHeavy];
     }
         
     [UIAlertController showAlertWithTitle:NSLocalizedString(@"Delete Device", nil)

@@ -6,7 +6,7 @@
 //
 
 #import "UIFeedbackGeneatorViewController.h"
-#import "FeedbackGeneatorUtil.h"
+#import "FeedbackGeneratorUtil.h"
 #import "LanguageListViewController.h"
 #import "AddHandsetViewController.h"
 #import "EditDeviceViewController.h"
@@ -62,31 +62,31 @@ static NSString *const CellID = @"FeedbackCellIdentifier";
     
     NSInteger index = indexPath.row;
     if (index == 0) {
-        [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleLight];
+        [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleLight];
         
         LanguageListViewController *vc = [[LanguageListViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         
     } else if (index == 1) {
-        [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleMedium];
+        [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleMedium];
         
         AddHandsetViewController *vc = [[AddHandsetViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         
     } else if (index == 2) {
-        [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleHeavy];
+        [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleHeavy];
         
         EditDeviceViewController *vc = [[EditDeviceViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         
     } else if (index == 3) {
         if (@available(iOS 13.0, *)) {
-            [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleSoft];
+            [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleSoft];
         }
         
     } else if (index == 4) {
         if (@available(iOS 13.0, *)) {
-            [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleRigid];
+            [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleRigid];
         }
     }
 }

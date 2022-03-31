@@ -13,7 +13,7 @@
 #import "SGQRCodeScanningView.h"
 #import "SGQRCodeConst.h"
 #import "UIImage+SGHelper.h"
-#import "FeedbackGeneatorUtil.h"
+#import "FeedbackGeneratorUtil.h"
 
 @interface SGQRCodeScanningVC () <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -357,7 +357,7 @@
     
     // MARK: -------- UIImpactFeedbackGenerator 的使用 --------
     if (self.needImpactFeedback) {
-        [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleMedium];
+        [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleMedium];
     }
     
     

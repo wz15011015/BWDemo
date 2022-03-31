@@ -1,13 +1,13 @@
 //
-//  FeedbackGeneatorUtil.m
+//  FeedbackGeneratorUtil.m
 //  Haptics
 //
 //  Created by hadlinks on 2020/11/23.
 //
 
-#import "FeedbackGeneatorUtil.h"
+#import "FeedbackGeneratorUtil.h"
 
-@implementation FeedbackGeneatorUtil
+@implementation FeedbackGeneratorUtil
 
 // MARK: 触感反馈
 

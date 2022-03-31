@@ -7,7 +7,7 @@
 //
 
 #import "LanguageListViewController.h"
-#import "FeedbackGeneatorUtil.h"
+#import "FeedbackGeneratorUtil.h"
 #import "LanguageCell.h"
 
 @interface LanguageListViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -107,7 +107,7 @@
         
         if (indexPath.row == 1) {
             // MARK: -------- UIImpactFeedbackGenerator 的使用 --------
-            [FeedbackGeneatorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleLight];
+            [FeedbackGeneratorUtil generateImpactFeedbackWithStyle:UIImpactFeedbackStyleLight];
         }
     }
     
