@@ -215,6 +215,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         NSArray *itemsArr = @[fileURL];
         UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:itemsArr applicationActivities:nil];
+        activityViewController.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError) {
+            NSLog(@"completion: %@, %d, %@, %@", activityType, completed, returnedItems, activityError);
+        };
         
         // 适配iPad
         UIPopoverPresentationController *popVC = activityViewController.popoverPresentationController;
