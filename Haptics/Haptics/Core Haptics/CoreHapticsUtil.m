@@ -11,6 +11,7 @@
 
 #pragma mark - Singleton
 
+API_AVAILABLE(ios(13.0))
 static CoreHapticsUtil *_instance = nil;
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone {
@@ -49,6 +50,84 @@ static CoreHapticsUtil *_instance = nil;
         }
     }
     return self;
+}
+
+
+#pragma mark - Getters
+
+- (CHHapticEngine *)sharedEngine {
+    if (!_sharedEngine) {
+        if (!CHHapticEngine.capabilitiesForHardware.supportsHaptics) {
+            NSLog(@"触觉引擎_共享引擎_设备不支持");
+            return nil;
+        }
+        
+        // 1. 创建触觉引擎
+        NSError *error = nil;
+        _sharedEngine = [[CHHapticEngine alloc] initAndReturnError:&error];
+        if (error) {
+            NSLog(@"触觉引擎_共享引擎_创建失败: %@", error.localizedDescription);
+            return nil;
+        }
+        
+        // 2. 设置触觉引擎
+        // 触觉引擎重置的回调
+        _sharedEngine.resetHandler = ^{
+            NSLog(@"触觉引擎_共享引擎_重置");
+        };
+        // 触觉引擎停止运行的回调
+        _sharedEngine.stoppedHandler = ^(CHHapticEngineStoppedReason stoppedReason) {
+            switch (stoppedReason) {
+                case CHHapticEngineStoppedReasonAudioSessionInterrupt:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: audio session interrupt");
+                    break;
+                    
+                case CHHapticEngineStoppedReasonApplicationSuspended:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: application suspended");
+                    break;
+                        
+                case CHHapticEngineStoppedReasonIdleTimeout:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: idle timeout");
+                    break;
+                        
+                case CHHapticEngineStoppedReasonNotifyWhenFinished:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: notify when finished");
+                    break;
+                    
+                case CHHapticEngineStoppedReasonEngineDestroyed:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: engine destroyed");
+                    break;
+                    
+                case CHHapticEngineStoppedReasonGameControllerDisconnect:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: game controller disconnect");
+                    break;
+                    
+                case CHHapticEngineStoppedReasonSystemError:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: system error");
+                    break;
+                    
+                default:
+                    NSLog(@"触觉引擎_共享引擎_停止运行: unknown error");
+                    break;
+            }
+        };
+    }
+    return _sharedEngine;
+}
+
+
+#pragma mark - Setters
+
+- (void)setEngineResetHandler:(CHHapticEngineResetHandler)engineResetHandler {
+    _engineResetHandler = engineResetHandler;
+    
+    self.sharedEngine.resetHandler = engineResetHandler;
+}
+
+- (void)setEngineStoppedHandler:(CHHapticEngineStoppedHandler)engineStoppedHandler {
+    _engineStoppedHandler = engineStoppedHandler;
+    
+    self.sharedEngine.stoppedHandler = engineStoppedHandler;
 }
 
 
@@ -175,6 +254,18 @@ static CoreHapticsUtil *_instance = nil;
     }
 }
 
+/// 启动共享触觉引擎以准备使用
+/// @param completion 完成回调
+- (void)startSharedEngineCompletion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0)) {
+    [CoreHapticsUtil startHapticEngine:self.sharedEngine completion:completion];
+}
+
+/// 停止共享触觉引擎
+/// @param completion 完成回调
+- (void)stopSharedEngineCompletion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0)) {
+    [CoreHapticsUtil stopHapticEngine:self.sharedEngine completion:completion];
+}
+
 
 // MARK: - 触觉引擎模式播放器
 
@@ -250,6 +341,43 @@ static CoreHapticsUtil *_instance = nil;
     if (error) {
         NSLog(@"触觉引擎_模式播放器停止出错: %@", error.localizedDescription);
     }
+}
+
+// MARK: Play Pattern
+
+/// 使用触觉引擎从文件播放触觉模式
+/// @param engine 触觉引擎
+/// @param filename 触觉模式文件
++ (void)useHapticEngine:(CHHapticEngine *)engine playHapticsWithAHAPFile:(NSString *)filename API_AVAILABLE(ios(13.0)) {
+    if (!engine) {
+        NSLog(@"触觉引擎_触觉引擎不存在!");
+        return;
+    }
+    if (!CoreHapticsUtilShared.supportsHaptics) {
+        NSLog(@"触觉引擎_设备不支持");
+        return;
+    }
+
+    NSString *type = nil;
+    if (![filename hasSuffix:@".ahap"]) {
+        type = @"ahap";
+    }
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:filename ofType:type];
+    if (!filePath) {
+        NSLog(@"触觉引擎_%@%@文件未找到", filename, type ? @".ahap" : @"");
+        return;
+    }
+    NSError *error = nil;
+    [engine playPatternFromURL:[NSURL fileURLWithPath:filePath] error:&error];
+    if (error) {
+        NSLog(@"触觉引擎_从文件播放模式失败: %@", error.localizedDescription);
+    }
+}
+
+/// 使用共享触觉引擎从文件播放触觉模式
+/// @param filename 触觉模式文件
+- (void)useSharedEnginePlayHapticsWithAHAPFile:(NSString *)filename API_AVAILABLE(ios(13.0)) {
+    [CoreHapticsUtil useHapticEngine:self.sharedEngine playHapticsWithAHAPFile:filename];
 }
 
 @end

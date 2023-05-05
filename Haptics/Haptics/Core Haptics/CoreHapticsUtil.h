@@ -26,10 +26,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+API_AVAILABLE(ios(13.0))
 @interface CoreHapticsUtil : NSObject
 
 /// 设备是否支持触觉引擎
 @property (nonatomic, assign) BOOL supportsHaptics;
+
+/// 共享触觉引擎
+@property (nonatomic, strong) CHHapticEngine *sharedEngine;
+
+/// 共享触觉引擎重置的回调
+@property (nonatomic, copy) CHHapticEngineResetHandler engineResetHandler;
+
+/// 共享触觉引擎停止运行的回调
+@property (nonatomic, copy) CHHapticEngineStoppedHandler engineStoppedHandler;
 
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -48,13 +58,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 启动触觉引擎以准备使用
 /// @param engine 触觉引擎
-/// @param completion 完成回调 
+/// @param completion 完成回调
 + (void)startHapticEngine:(CHHapticEngine *)engine completion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0));
 
 /// 停止触觉引擎
 /// @param engine 触觉引擎
 /// @param completion 完成回调
 + (void)stopHapticEngine:(CHHapticEngine *)engine completion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0));
+
+/// 启动共享触觉引擎以准备使用
+/// @param completion 完成回调
+- (void)startSharedEngineCompletion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0));
+
+/// 停止共享触觉引擎
+/// @param completion 完成回调
+- (void)stopSharedEngineCompletion:(CHHapticCompletionHandler _Nullable)completion API_AVAILABLE(ios(13.0));
 
 
 // MARK: - 触觉引擎模式播放器
@@ -82,6 +100,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param player 模式播放器
 /// @param time 停止时间 (传入 CHHapticTimeImmediate 或 0 表示立即停止)
 + (void)stopPatternPlayer:(id<CHHapticPatternPlayer>)player atTime:(NSTimeInterval)time API_AVAILABLE(ios(13.0));
+
+// MARK: Play Pattern
+
+/// 使用触觉引擎从文件播放触觉模式
+/// @param engine 触觉引擎
+/// @param filename 触觉模式文件
++ (void)useHapticEngine:(CHHapticEngine *)engine playHapticsWithAHAPFile:(NSString *)filename API_AVAILABLE(ios(13.0));
+
+/// 使用共享触觉引擎从文件播放触觉模式
+/// @param filename 触觉模式文件
+- (void)useSharedEnginePlayHapticsWithAHAPFile:(NSString *)filename API_AVAILABLE(ios(13.0));
 
 @end
 
